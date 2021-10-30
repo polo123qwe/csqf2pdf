@@ -118,41 +118,7 @@ def extract_config_data(conf):
 
     return edges
 
-
-def create_topology(dot, graph):
-
-    dot.engine = 'dot'
-
-    for key, value in graph.items():
-        dot.node(key, key)
-        for v in value:
-            dot.node(v, v)
-            if 'SW' in key:
-                dot.node(key+'q', label='''<<TABLE>
-		 <TR>
-		   <TD>q1</TD>
-		   <TD>q2</TD>
-		   <TD>q3</TD>
-		   </TR>
-		</TABLE>>''', shape='rectangle')
-                dot.node(key+'q1', label='''<<TABLE>
-		 <TR>
-		   <TD>q1</TD>
-		   <TD>q2</TD>
-		   <TD>q3</TD>
-		   </TR>
-		</TABLE>>''', shape='rectangle')
-                dot.edge(key, key+'q', arrowhead="none", color="red")
-                dot.edge(key+'q', key+'q1', arrowhead="none")
-                dot.edge(key+'q1', v, arrowhead="none")
-            else:
-                dot.edge(key, v, arrowhead='none')
-
-    dot.render('test-output/topology.gv', view=True)
-
-
 def qString(q, m):
-    # print(q)
 
     if q == '0':
         return f"{{ Q1 | Q2 | Q3 }} | {{ {m.name}|| }}"
