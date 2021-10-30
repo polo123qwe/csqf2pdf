@@ -5,13 +5,9 @@ import argparse
 
 # NOTE TO SERGI: OUR SOLUTION DID ALWAYS WROTE THE REPORT IN THIS DIRECTORY SO HERE TC1 OUTPUT IS ACTUALLY TC2 OUTPUT :D
 SOLUTIONPATH = "test_cases/example/Output/"
-
 FILEPATH = "test_cases/example/Input/"
-
 OUTPUT_PATH = "test_output/"
-
 BASE = ""
-
 EMTPY_QUEUE_STR = "{ Q1 | Q2 | Q3 } | { || }"
 
 
@@ -118,7 +114,9 @@ def extract_config_data(conf):
 
     return edges
 
+
 def qString(q, m):
+    # print(q)
 
     if q == '0':
         return f"{{ Q1 | Q2 | Q3 }} | {{ {m.name}|| }}"
@@ -130,7 +128,7 @@ def qString(q, m):
 
 def create_topology_with_message(dot, graph, message):
 
-    dot.engine = 'fdp'
+    dot.engine = 'dot'
 
     linkq = {}
     for link in message.links:
@@ -197,7 +195,8 @@ def create_topology_with_message(dot, graph, message):
             file.write(str(dot))
 
 def create_topology(dot, graph):
-    dot.engine = 'fdp'
+
+    dot.engine = 'dot'
 
     print("Items to iterate", graph)
 
@@ -233,6 +232,7 @@ def main(message_name):
         topology_with_message(message_name)
 
 def empty_topology():
+
     doc_config = xml.dom.minidom.parse(FILEPATH + "Config.xml")
 
     config_doc = doc_config.getElementsByTagName("Architecture")[0]
