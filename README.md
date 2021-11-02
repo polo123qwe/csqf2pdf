@@ -32,3 +32,7 @@ example:
 ```bash
 python .\csqf2pdf.py -m F1 -t "test_cases\example\Input\Config.xml" -r "test_cases\example\Output\Report.xml" -o "test_output"
 ```
+
+### Contributors
+Sergi Bernaus (s202372@student.dtu.dk)
+Tufan Usta (s212388@student.dtu.dk)
