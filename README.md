@@ -6,12 +6,14 @@ It outputs a .gv file that has the graphviz graph, and if possible also generate
 You can also preview the topology at https://dreampuf.github.io/GraphvizOnline, just pasting the code generated in the .gv file.
 
 ### Installation
-This package uses Python 3 and the ´graphviz´ package. To install it run:
-´´´
+This package uses Python 3 and the `graphviz` package. To install it run:
+
+```bash
 pip install graphviz
-´´´
+```
 
 ### Usage
+```bash
 usage: csqf2pdf.py [-h] [-m [message]] [-t [topology]] [-r [report]] [-o [output]]
 
 options:
@@ -24,8 +26,9 @@ options:
                         Report file location
   -o [output], --output [output]
                         Output directory
-              
+```
+
 example:
-´´´
-py .\csqf2pdf.py -m F1 -t "test_cases\example\Input\Config.xml" -r "test_cases\example\Output\Report.xml" -o "test_output"
-´´´
+```bash
+python .\csqf2pdf.py -m F1 -t "test_cases\example\Input\Config.xml" -r "test_cases\example\Output\Report.xml" -o "test_output"
+```
