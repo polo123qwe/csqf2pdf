@@ -34,5 +34,5 @@ python .\csqf2pdf.py -m F1 -t "test_cases\example\Input\Config.xml" -r "test_cas
 ```
 
 ### Contributors
-Sergi Bernaus (s202372@student.dtu.dk)
-Tufan Usta (s212388@student.dtu.dk)
+- Sergi Bernaus (s202372@student.dtu.dk)
+- Tufan Usta (s212388@student.dtu.dk)
