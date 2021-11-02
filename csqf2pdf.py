@@ -1,12 +1,8 @@
 import xml.dom.minidom
 import collections
-import graphviz
 import argparse
+import graphviz
 
-# NOTE TO SERGI: OUR SOLUTION DID ALWAYS WROTE THE REPORT IN THIS DIRECTORY SO HERE TC1 OUTPUT IS ACTUALLY TC2 OUTPUT :D
-SOLUTIONPATH = "test_cases/example/Output/"
-FILEPATH = "test_cases/example/Input/"
-OUTPUT_PATH = "test_output/"
 BASE = ""
 EMTPY_QUEUE_STR = "{ Q1 | Q2 | Q3 } | { || }"
 
@@ -126,7 +122,7 @@ def qString(q, m):
         return f"{{ Q1 | Q2 | Q3 }} | {{ ||{m.name} }}"
 
 
-def create_topology_with_message(dot, graph, message):
+def create_topology_with_message(dot, graph, message, output_path):
 
     dot.engine = 'dot'
 
@@ -135,9 +131,9 @@ def create_topology_with_message(dot, graph, message):
         linkq[link.src+link.dest] = link.q_number
         linkq[link.dest+link.src] = link.q_number
 
-    print("Items to iterate", graph)
-    print("Message path", message)
-    print("Edges", linkq)
+    #print("Items to iterate", graph)
+    #print("Message path", message)
+    #print("Edges", linkq)
 
     for key, value in graph.items():
         if key in message.path:
@@ -189,12 +185,12 @@ def create_topology_with_message(dot, graph, message):
                 dot.edge(v+key+'1', v, arrowhead='none')
 
     try:
-        dot.render(f'{OUTPUT_PATH}topology{message.name}.gv', view=True)
+        dot.render(f'{output_path}/output.gv', view=True)
     except:
-        with open(f'{OUTPUT_PATH}topology{message.name}.gv', 'w') as file:
+        with open(f'{output_path}/output.gv', 'w') as file:
             file.write(str(dot))
 
-def create_topology(dot, graph):
+def create_topology(dot, graph, output_path):
 
     dot.engine = 'dot'
 
@@ -218,22 +214,21 @@ def create_topology(dot, graph):
                 dot.edge(v+key+'1', v, arrowhead='none')
 
     try:
-        dot.render(OUTPUT_PATH + 'topology.gv', view=True)
+        dot.render(f'{output_path}/output.gv', view=True)
     except:
-        with open(OUTPUT_PATH + 'topology.gv', 'w') as file:
+        with open(f'{output_path}/output.gv', 'w') as file:
             file.write(str(dot))
 
-def main(message_name):
-
+def main(message_name, topology_path, report_path, output_path):
     if not message_name:
         print('Creating empty topology')
-        empty_topology()
+        empty_topology(topology_path, output_path)
     else:
-        topology_with_message(message_name)
+        topology_with_message(message_name, topology_path, report_path, output_path)
 
-def empty_topology():
+def empty_topology(topology_path, output_path):
 
-    doc_config = xml.dom.minidom.parse(FILEPATH + "Config.xml")
+    doc_config = xml.dom.minidom.parse(topology_path)
 
     config_doc = doc_config.getElementsByTagName("Architecture")[0]
 
@@ -243,11 +238,11 @@ def empty_topology():
 
     dot = graphviz.Digraph(comment='Network Topology')
     
-    create_topology(dot, arch.graph)
+    create_topology(dot, arch.graph, output_path)
 
-def topology_with_message(message_name):
-    doc_config = xml.dom.minidom.parse(FILEPATH + "Config.xml")
-    doc_report = xml.dom.minidom.parse(SOLUTIONPATH + "Report.xml")
+def topology_with_message(message_name, topology_path, report_path, output_path):
+    doc_config = xml.dom.minidom.parse(topology_path)
+    doc_report = xml.dom.minidom.parse(report_path)
 
     config_doc = doc_config.getElementsByTagName("Architecture")[0]
     report_doc = doc_report.getElementsByTagName("Report")[0]
@@ -265,13 +260,20 @@ def topology_with_message(message_name):
 
     message = messages[message_name]
 
-    create_topology_with_message(dot, arch.graph, message)
+    create_topology_with_message(dot, arch.graph, message, output_path)
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('message', metavar='message', type=str, nargs='?',
-                        help='message name')
+    parser.add_argument('-m', '--message', metavar='message', type=str, nargs='?',
+                        default='', help='Message name (eg. F1)')
+    parser.add_argument('-t', '--topology', metavar='topology', type=str, nargs='?',
+                        default='Config.xml', help='Topology file location')
+    parser.add_argument('-r', '--report', metavar='report', type=str, nargs='?',
+                        default='Report.xml', help='Report file location')
+    parser.add_argument('-o', '--output', metavar='output', type=str, nargs='?',
+                        default='.', help='Output directory')
+
     args = parser.parse_args()
-    main(args.message)
+    main(args.message, args.topology, args.report, args.output)
