@@ -4,6 +4,10 @@
 	</Vertex>
 	<Vertex Name="ES2">
 	</Vertex>
+	<Vertex Name="ES3">
+	</Vertex>
+	<Vertex Name="ES4">
+	</Vertex>
 	<Vertex Name="SW1">
 	</Vertex>
   <Vertex Name="SW2">
@@ -35,5 +39,9 @@
   <Edge Id="9" BW="1000" PropDelay="10" Source="SW5" Destination="SW6">
 	</Edge>
   <Edge Id="10" BW="1000" PropDelay="10" Source="SW6" Destination="ES2">
+	</Edge>
+  <Edge Id="11" BW="1000" PropDelay="10" Source="SW4" Destination="ES3">
+	</Edge>
+  <Edge Id="12" BW="1000" PropDelay="10" Source="SW3" Destination="ES4">
 	</Edge>
 </Architecture>

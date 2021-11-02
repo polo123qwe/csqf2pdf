@@ -145,7 +145,7 @@ def create_topology_with_message(dot, graph, message, output_path):
             if v in message.path:
                 dot.node(v, color='blue', style='bold')
                 if 'SW' in v and 'SW' in key:
-                    if key in message.path:
+                    if key in message.path and v in message.path and key+v in linkq.keys():
                         dot.node(v+key, shape='record',
                                  label=qString(linkq[key+v], message), color='blue', style='bold')
 
@@ -163,7 +163,7 @@ def create_topology_with_message(dot, graph, message, output_path):
                     dot.node(v+key+'1', shape='record', label=EMTPY_QUEUE_STR)
 
                 else:
-                    if key in message.path:
+                    if key in message.path and v in message.path and key+v in linkq.keys():
                         dot.node(v+key, shape='record',
                                  label=qString(linkq[key+v], message), color='blue', style='bold')
 
@@ -185,9 +185,9 @@ def create_topology_with_message(dot, graph, message, output_path):
                 dot.edge(v+key+'1', v, arrowhead='none')
 
     try:
-        dot.render(f'{output_path}/output.gv', view=True)
+        dot.render(f'{output_path}/output_{message.name}.gv', view=True)
     except:
-        with open(f'{output_path}/output.gv', 'w') as file:
+        with open(f'{output_path}/output_{message.name}.gv', 'w') as file:
             file.write(str(dot))
 
 def create_topology(dot, graph, output_path):
