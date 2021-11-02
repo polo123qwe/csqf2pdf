@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<Report>
+	<Message Name="F1" maxE2E="35">
+		<Link Source="ES1" Destination="SW2" Qnumber="2"/>
+		<Link Source="SW2" Destination="SW1" Qnumber="0"/>
+		<Link Source="SW1" Destination="ES2" Qnumber="0"/>
+	</Message>
+	<Message Name="F2" maxE2E="22">
+		<Link Source="ES1" Destination="SW2" Qnumber="0"/>
+		<Link Source="SW2" Destination="ES2" Qnumber="0"/>
+	</Message>
+	<Message Name="F3" maxE2E="37">
+		<Link Source="ES1" Destination="SW2" Qnumber="2"/>
+		<Link Source="SW2" Destination="SW1" Qnumber="1"/>
+		<Link Source="SW1" Destination="ES2" Qnumber="1"/>
+	</Message>
+	<Message Name="F4" maxE2E="38">
+		<Link Source="ES1" Destination="SW2" Qnumber="2"/>
+		<Link Source="SW2" Destination="SW1" Qnumber="2"/>
+		<Link Source="SW1" Destination="ES2" Qnumber="1"/>
+	</Message>
+	<Message Name="F5" maxE2E="36">
+		<Link Source="ES2" Destination="SW1" Qnumber="2"/>
+		<Link Source="SW1" Destination="SW2" Qnumber="0"/>
+		<Link Source="SW2" Destination="ES1" Qnumber="1"/>
+	</Message>
+	<Message Name="F6" maxE2E="22">
+		<Link Source="ES2" Destination="SW2" Qnumber="0"/>
+		<Link Source="SW2" Destination="ES1" Qnumber="0"/>
+	</Message>
+	<Message Name="F7" maxE2E="35">
+		<Link Source="ES2" Destination="SW1" Qnumber="0"/>
+		<Link Source="SW1" Destination="SW2" Qnumber="2"/>
+		<Link Source="SW2" Destination="ES1" Qnumber="0"/>
+	</Message>
+	<Message Name="F8" maxE2E="36">
+		<Link Source="ES1" Destination="SW2" Qnumber="1"/>
+		<Link Source="SW2" Destination="SW1" Qnumber="0"/>
+		<Link Source="SW1" Destination="ES2" Qnumber="2"/>
+	</Message>
+	<Solution Runtime="1" MeanE2E="32.625" MeanBW="280.0"/>
+</Report>

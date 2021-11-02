@@ -149,7 +149,7 @@ def create_topology_with_message(dot, graph, message):
             if v in message.path:
                 dot.node(v, color='blue', style='bold')
                 if 'SW' in v and 'SW' in key:
-                    if key in message.path:
+                    if key in message.path and v in message.path and key+v in linkq.keys():
                         dot.node(v+key, shape='record',
                                  label=qString(linkq[key+v], message), color='blue', style='bold')
 
@@ -167,7 +167,8 @@ def create_topology_with_message(dot, graph, message):
                     dot.node(v+key+'1', shape='record', label=EMTPY_QUEUE_STR)
 
                 else:
-                    if key in message.path:
+                    if key in message.path and v in message.path and key+v in linkq.keys():
+                        print(key+v)
                         dot.node(v+key, shape='record',
                                  label=qString(linkq[key+v], message), color='blue', style='bold')
 
@@ -233,7 +234,7 @@ def main(message_name):
 
 def empty_topology():
 
-    doc_config = xml.dom.minidom.parse(FILEPATH + "Config.xml")
+    doc_config = xml.dom.minidom.parse(FILEPATH + "Config4.xml")
 
     config_doc = doc_config.getElementsByTagName("Architecture")[0]
 
@@ -246,8 +247,8 @@ def empty_topology():
     create_topology(dot, arch.graph)
 
 def topology_with_message(message_name):
-    doc_config = xml.dom.minidom.parse(FILEPATH + "Config.xml")
-    doc_report = xml.dom.minidom.parse(SOLUTIONPATH + "Report.xml")
+    doc_config = xml.dom.minidom.parse(FILEPATH + "Config4.xml")
+    doc_report = xml.dom.minidom.parse(SOLUTIONPATH + "Report4.xml")
 
     config_doc = doc_config.getElementsByTagName("Architecture")[0]
     report_doc = doc_report.getElementsByTagName("Report")[0]
