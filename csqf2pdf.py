@@ -127,9 +127,14 @@ def create_topology_with_message(dot, graph, message, output_path):
     dot.engine = 'dot'
 
     linkq = {}
+    linkwcet = {}
+    ctr = 0
     for link in message.links:
         linkq[link.src+link.dest] = link.q_number
         linkq[link.dest+link.src] = link.q_number
+        ctr += ((int(link.q_number))*12) + 10
+        linkwcet[link.src+link.dest] = ctr
+        linkwcet[link.dest+link.src] = ctr
 
     #print("Items to iterate", graph)
     #print("Message path", message)
@@ -143,9 +148,11 @@ def create_topology_with_message(dot, graph, message, output_path):
         for v in value:
 
             if v in message.path:
-                dot.node(v, color='blue', style='bold')
+                
                 if 'SW' in v and 'SW' in key:
+
                     if key in message.path and v in message.path and key+v in linkq.keys():
+                        dot.node(v, color='blue', style='bold',xlabel = f'WCET: {linkwcet[key+v]}')
                         dot.node(v+key, shape='record',
                                  label=qString(linkq[key+v], message), color='blue', style='bold')
 
@@ -156,6 +163,7 @@ def create_topology_with_message(dot, graph, message, output_path):
                         dot.edge(v+key+'1', v, arrowhead='none',
                                  color='blue', style='bold')
                     else:
+                        dot.node(v, color='blue', style='bold')
                         dot.node(v+key, shape='record', label=EMTPY_QUEUE_STR)
                         dot.edge(key, v+key, arrowhead='none')
                         dot.edge(v+key, v+key+'1', arrowhead='none')
@@ -164,6 +172,7 @@ def create_topology_with_message(dot, graph, message, output_path):
 
                 else:
                     if key in message.path and v in message.path and key+v in linkq.keys():
+                        dot.node(v, color='blue', style='bold',xlabel = f'WCET: {linkwcet[key+v]}')
                         dot.node(v+key, shape='record',
                                  label=qString(linkq[key+v], message), color='blue', style='bold')
 
@@ -172,11 +181,13 @@ def create_topology_with_message(dot, graph, message, output_path):
                         dot.edge(v+key, v, arrowhead='none',
                                  color='blue', style='bold')
                     else:
+                        dot.node(v, color='blue', style='bold')
                         dot.node(v+key, shape='record', label=EMTPY_QUEUE_STR)
 
                         dot.edge(key, v+key, arrowhead='none')
                         dot.edge(v+key, v, arrowhead='none')
             else:
+                dot.node(v, color='blue', style='bold')
                 dot.node(v+key, shape='record', label=EMTPY_QUEUE_STR)
                 dot.node(v+key+'1', shape='record', label=EMTPY_QUEUE_STR)
 
@@ -241,6 +252,7 @@ def empty_topology(topology_path, output_path):
     create_topology(dot, arch.graph, output_path)
 
 def topology_with_message(message_name, topology_path, report_path, output_path):
+
     doc_config = xml.dom.minidom.parse(topology_path)
     doc_report = xml.dom.minidom.parse(report_path)
 
