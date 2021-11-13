@@ -114,11 +114,11 @@ def extract_config_data(conf):
 def qString(q, m):
     # print(q)
 
-    if q == '0':
+    if q == '1':
         return f"{{ Q1 | Q2 | Q3 }} | {{ {m.name}|| }}"
-    elif q == '1':
-        return f"{{ Q1 | Q2 | Q3 }} | {{ |{m.name}| }}"
     elif q == '2':
+        return f"{{ Q1 | Q2 | Q3 }} | {{ |{m.name}| }}"
+    elif q == '3':
         return f"{{ Q1 | Q2 | Q3 }} | {{ ||{m.name} }}"
 
 
@@ -133,6 +133,7 @@ def create_topology_with_message(dot, graph, message, output_path):
         linkq[link.src+link.dest] = link.q_number
         linkq[link.dest+link.src] = link.q_number
         ctr += ((int(link.q_number))*12) + 10
+        print(ctr)
         linkwcet[link.src+link.dest] = ctr
         linkwcet[link.dest+link.src] = ctr
 
@@ -187,7 +188,7 @@ def create_topology_with_message(dot, graph, message, output_path):
                         dot.edge(key, v+key, arrowhead='none')
                         dot.edge(v+key, v, arrowhead='none')
             else:
-                dot.node(v, color='blue', style='bold')
+                dot.node(v)
                 dot.node(v+key, shape='record', label=EMTPY_QUEUE_STR)
                 dot.node(v+key+'1', shape='record', label=EMTPY_QUEUE_STR)
 
